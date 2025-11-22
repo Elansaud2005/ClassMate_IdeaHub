@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ClassMate • Projects — Idea Hub</title>
+  <meta name="description" content="List of team project ideas submitted by students in ClassMate Idea Hub.">
+  <link rel="stylesheet" href="../css/styles.css" />
+</head>
+<body>
+  <header>
+    <nav aria-label="Primary">
+      <ul class="nav">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about-us.html">About</a></li>
+        <li><a href="idea.html">Submit Idea</a></li>
+        <li><a href="projects.html" aria-current="page">Projects</a></li>
+        <li><a href="contact-us.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h1>Submitted Team Project Ideas</h1>
+    <p>These projects are loaded directly from the MySQL database.</p>
+
+    <div id="projectsStatus" class="hint"></div>
+
+    <div class="table-wrapper">
+      <table aria-describedby="projectsStatus">
+        <caption>Team Project Ideas</caption>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Team Name</th>
+            <th>Team Size</th>
+            <th>Course</th>
+            <th>Major</th>
+            <th>Type</th>
+            <th>Project Title</th>
+            <th>Representative</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody id="projectsBody">
+          <!-- JS will inject rows here -->
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <footer class="container">
+    <p>© 2025 ClassMate Idea Hub — Team CM3, College of Computing, University of Jeddah</p>
+  </footer>
+
+  <script src="../js/app.js" defer></script>
+</body>
+</html>

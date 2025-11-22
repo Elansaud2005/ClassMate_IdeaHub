@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ClassMate • Submit Team Project Idea</title>
+  <meta name="description" content="Platform for UOJ Computing student groups to submit and organize project ideas.">
+  <link rel="stylesheet" href="../css/styles.css" />
+</head>
+
+<body>
+  <header>
+    <nav aria-label="Primary">
+      <ul class="nav">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about-us.html">About</a></li>
+        <li><a href="idea.html" aria-current="page">Submit Idea</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="contact-us.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h1>Submit Your Team Project Idea</h1>
+    <p>
+      This form is for project groups in the College of Computing at the University of Jeddah.
+      The representative fills in the team and project details.
+    </p>
+
+    <form id="projectForm" action="#" method="post" novalidate>
+
+      <!-- Team info -->
+      <fieldset class="form-group">
+        <legend>Team Information</legend>
+
+        <div class="form-row">
+          <label for="teamName">Team Name</label>
+          <input id="teamName" name="teamName" type="text"
+                 required minlength="3" maxlength="50" placeholder="e.g., CM3 Innovators" />
+        </div>
+
+        <div class="form-row">
+          <label for="teamSize">Team Size</label>
+          <input id="teamSize" name="teamSize" type="number"
+                 required min="1" max="10" step="1" />
+          <small class="hint">Include the representative in the count.</small>
+        </div>
+
+        <div class="form-row">
+          <label for="repName">Representative Name</label>
+          <input id="repName" name="repName" type="text"
+                 required minlength="3" maxlength="50" placeholder="Full name of team representative" />
+        </div>
+
+        <div class="form-row">
+          <label for="repId">Representative Student ID</label>
+          <input id="repId" name="repId" type="text"
+                 required minlength="7" maxlength="7" placeholder="e.g., 2310026" />
+        </div>
+
+        <div class="form-row">
+          <label for="repEmail">Representative Email</label>
+          <input id="repEmail" name="repEmail" type="email"
+                 required placeholder="name@uj.edu.sa" />
+        </div>
+
+        <div class="form-row">
+          <label for="otherMembers">Other Team Members (optional)</label>
+          <textarea id="otherMembers" name="otherMembers" rows="3" maxlength="400"
+                    placeholder="List names and IDs, e.g., Sara (2310xxx), Haneen (2310yyy)…"></textarea>
+        </div>
+      </fieldset>
+
+      <!-- Project info -->
+      <fieldset class="form-group">
+        <legend>Project Information</legend>
+
+        <div class="form-row">
+          <label for="courseCode">Course Code</label>
+          <input id="courseCode" name="courseCode" type="text"
+                 required minlength="3" maxlength="15" placeholder="e.g., CCSW321" />
+        </div>
+
+        <div class="form-row">
+          <label for="projectName">Project Title</label>
+          <input id="projectName" name="projectName" type="text"
+                 required minlength="3" maxlength="60" placeholder="Your project idea" />
+        </div>
+
+        <div class="form-row">
+          <label for="category">Major / Track</label>
+          <select id="category" name="category" required>
+            <option value="" selected disabled>Select a major</option>
+            <option value="cybersecurity">Cybersecurity</option>
+            <option value="cs">Computer Science</option>
+            <option value="se">Software Engineering</option>
+            <option value="is">Information Systems</option>
+            <option value="ai">Artificial Intelligence</option>
+            <option value="data">Data Science</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <span>Project Type</span>
+          <label>
+            <input type="radio" name="projectType" value="group" />
+            Group
+          </label>
+          <label>
+            <input type="radio" name="projectType" value="solo" />
+            Solo (one student)
+          </label>
+        </div>
+
+        <div class="form-row">
+          <label for="projectDesc">Short Description</label>
+          <textarea id="projectDesc" name="projectDesc" rows="4" required
+                    minlength="10" maxlength="400"
+                    placeholder="Describe the main idea, goals, and expected outcome."></textarea>
+        </div>
+
+        <div class="form-row">
+          <label for="tools">Preferred Technologies / Tools (optional)</label>
+          <textarea id="tools" name="tools" rows="3" maxlength="300"
+                    placeholder="e.g., React, Node.js, MySQL, Figma…"></textarea>
+        </div>
+      </fieldset>
+
+      <div class="form-actions">
+        <button type="submit">Submit Team Idea</button>
+        <button type="reset">Clear</button>
+      </div>
+    </form>
+  </main>
+
+  <footer class="container">
+    <p>© 2025 ClassMate Idea Hub — Team CM3, College of Computing, University of Jeddah</p>
+  </footer>
+
+  <script src="../js/app.js" defer></script>
+</body>
+</html>
