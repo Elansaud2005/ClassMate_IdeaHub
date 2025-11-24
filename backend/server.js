@@ -1,81 +1,128 @@
 // backend/server.js
-// Express server for ClassMate Idea Hub
+// simple express backend for classmate project
 
 const express = require("express");
 const path = require("path");
 const { check, validationResult } = require("express-validator");
-const pool = require("./db"); // تأكدي أن db.js في نفس المجلد
+const pool = require("./db");
 
 const app = express();
 const PORT = 3000;
 
-// ============ Middlewares ============
+// ------------------------------------------------------
+// basic middleware
+// ------------------------------------------------------
 
-// JSON + form body parsing
+// parse json bodies (for fetch api)
 app.use(express.json());
+
+// parse form data (for normal html forms)
 app.use(express.urlencoded({ extended: false }));
 
-// Frontend static files (html, css, js)
-const frontendPath = path.join(__dirname, "..");
-app.use("/", express.static(frontendPath));
+// ------------------------------------------------------
+// static frontend
+// ------------------------------------------------------
+// this file is inside "backend/"
+// so ".." = project root (where html, css, js, media live)
 
-// Home route
+const frontendDir = path.join(__dirname, "..");
+
+// serve static files like /css, /js, /media, and /html if needed
+app.use(express.static(frontendDir));
+
+// ------------------------------------------------------
+// html page routes
+// ------------------------------------------------------
+
+// home page (root url)
 app.get("/", (req, res) => {
-  res.sendFile(path.join(frontendPath, "html", "index.html"));
+  res.sendFile(path.join(frontendDir, "html", "index.html"));
 });
 
-// ============ CONTACT API ============
+// explicit route for /index.html (for direct access)
+app.get("/index.html", (req, res) => {
+  res.sendFile(path.join(frontendDir, "html", "index.html"));
+});
+
+// about page
+app.get("/about-us.html", (req, res) => {
+  res.sendFile(path.join(frontendDir, "html", "about-us.html"));
+});
+
+// contact page
+app.get("/contact-us.html", (req, res) => {
+  res.sendFile(path.join(frontendDir, "html", "contact-us.html"));
+});
+
+// projects list page
+app.get("/projects.html", (req, res) => {
+  res.sendFile(path.join(frontendDir, "html", "projects.html"));
+});
+
+// submit idea page
+app.get("/idea.html", (req, res) => {
+  res.sendFile(path.join(frontendDir, "html", "idea.html"));
+});
+
+// ------------------------------------------------------
+// contact api
+// ------------------------------------------------------
+// receives data from contact-us form and saves it into db
 
 app.post(
   "/api/contact",
   [
+    // basic validation rules for contact fields
     check("firstName")
       .trim()
       .isLength({ min: 2, max: 30 })
-      .withMessage("First name must be 2–30 characters"),
+      .withMessage("first name must be 2–30 characters"),
 
     check("lastName")
       .trim()
       .isLength({ min: 2, max: 30 })
-      .withMessage("Last name must be 2–30 characters"),
+      .withMessage("last name must be 2–30 characters"),
 
     check("gender")
       .notEmpty()
-      .withMessage("Please select a valid gender"),
+      .withMessage("please select a gender"),
 
     check("mobile")
       .trim()
       .matches(/^(\+?9665\d{8}|05\d{8})$/)
-      .withMessage("Use Saudi format: +9665XXXXXXXX or 05XXXXXXXX"),
+      .withMessage("use saudi format: +9665xxxxxxxx or 05xxxxxxxx"),
 
     check("dob")
       .trim()
       .notEmpty()
-      .withMessage("DOB is required"),
+      .withMessage("dob is required"),
 
     check("email")
       .trim()
       .isEmail()
-      .withMessage("Enter a valid email"),
+      .withMessage("enter a valid email"),
 
     check("language")
       .notEmpty()
-      .withMessage("Choose a valid language"),
+      .withMessage("choose at least one language"),
 
     check("message")
       .trim()
       .isLength({ min: 10, max: 1000 })
-      .withMessage("Message must be between 10 and 1000 characters"),
+      .withMessage("message must be between 10 and 1000 characters"),
   ],
   async (req, res) => {
+    // check validation result
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
+      // frontend expects: status = "error" and errors = []
       return res.status(400).json({
         status: "error",
         errors: errors.array(),
       });
     }
 
+    // extract data from body
     const {
       firstName,
       lastName,
@@ -88,93 +135,89 @@ app.post(
     } = req.body;
 
     try {
+      // insert into contact_messages table
       await pool.execute(
-        `INSERT INTO contact_messages 
+        `insert into contact_messages 
          (first_name, last_name, gender, mobile, dob, email, language, message) 
-         VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+         values (?, ?, ?, ?, ?, ?, ?, ?)`,
         [firstName, lastName, gender, mobile, dob, email, language, message]
       );
 
-      console.log("New Contact Submission saved:", {
-        firstName,
-        lastName,
-        gender,
-        mobile,
-        dob,
-        email,
-        language,
-        message,
-      });
+      console.log("new contact message saved");
 
       return res.json({
         status: "ok",
-        msg: "Your message was received successfully ✔",
+        msg: "your message was received successfully ✔",
       });
     } catch (err) {
-      console.error("Error inserting contact message:", err);
+      console.error("error inserting contact message:", err);
       return res.status(500).json({
         status: "error",
-        msg: "Database error while saving your message.",
+        msg: "database error while saving your message.",
       });
     }
   }
 );
 
-// ============ PROJECT API ============
+// ------------------------------------------------------
+// project api
+// ------------------------------------------------------
+// receives one team project idea and saves it into db
 
-// POST /api/project — save team project idea
 app.post(
   "/api/project",
   [
+    // basic validation for project form fields
     check("teamName")
       .trim()
       .isLength({ min: 3, max: 50 })
-      .withMessage("Team name must be 3–50 characters"),
+      .withMessage("team name must be 3–50 characters"),
 
     check("teamSize")
       .isInt({ min: 1, max: 10 })
-      .withMessage("Team size must be between 1 and 10"),
+      .withMessage("team size must be between 1 and 10"),
 
     check("repName")
       .trim()
       .isLength({ min: 3, max: 50 })
-      .withMessage("Representative name must be 3–50 characters"),
+      .withMessage("representative name must be 3–50 characters"),
 
     check("repId")
       .trim()
       .matches(/^\d{7}$/)
-      .withMessage("Representative ID must be exactly 7 digits"),
+      .withMessage("representative id must be exactly 7 digits"),
 
     check("repEmail")
       .trim()
       .isEmail()
-      .withMessage("Representative email must be valid"),
+      .withMessage("representative email must be valid"),
 
     check("courseCode")
       .trim()
       .matches(/^[A-Za-z]{2,}\d{2,}$/)
-      .withMessage("Course code must look like CCSW321"),
+      .withMessage("course code must look like ccsw321"),
 
     check("category")
       .notEmpty()
-      .withMessage("Major / track is required"),
+      .withMessage("major / track is required"),
 
     check("projectType")
       .notEmpty()
-      .withMessage("Project type is required"),
+      .withMessage("project type is required"),
 
     check("projectName")
       .trim()
       .isLength({ min: 3, max: 60 })
-      .withMessage("Project title must be 3–60 characters"),
+      .withMessage("project title must be 3–60 characters"),
 
     check("projectDesc")
       .trim()
       .isLength({ min: 10, max: 400 })
-      .withMessage("Description must be 10–400 characters"),
-    // tools + otherMembers are optional
+      .withMessage("description must be 10–400 characters"),
+    // tools + otherMembers are optional, so no validation here
   ],
   async (req, res) => {
+    // validation result
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({
@@ -183,6 +226,7 @@ app.post(
       });
     }
 
+    // extract data from body
     const {
       teamName,
       teamSize,
@@ -198,14 +242,15 @@ app.post(
       tools,
     } = req.body;
 
-    console.log("New Project Submission (raw body):", req.body);
+    console.log("new project submission received");
 
     try {
+      // insert into projects table
       await pool.execute(
-        `INSERT INTO projects
+        `insert into projects
          (team_name, team_size, rep_name, rep_id, rep_email, other_members,
           course_code, category, project_type, project_name, description, tools)
-         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+         values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
         [
           teamName,
           teamSize,
@@ -224,34 +269,40 @@ app.post(
 
       return res.json({
         status: "ok",
-        msg: "Team project idea saved successfully ✔",
+        msg: "team project idea saved successfully ✔",
       });
     } catch (err) {
-      console.error("Error inserting project:", err);
+      console.error("error inserting project:", err);
       return res.status(500).json({
         status: "error",
-        msg: "Database error while saving project.",
+        msg: "database error while saving project.",
       });
     }
   }
 );
 
-// GET /api/projects — list all projects
+// ------------------------------------------------------
+// list all projects for projects page
+// used by frontend js (initProjectsList) in projects.html
+// ------------------------------------------------------
+
 app.get("/api/projects", async (req, res) => {
   try {
     const [rows] = await pool.execute(
-      `SELECT 
+      `select 
          id,
          team_name,
          team_size,
+         other_members,
          course_code,
          category,
          project_type,
          project_name,
          rep_name,
-         description
-       FROM projects
-       ORDER BY id DESC`
+         description,
+         tools
+       from projects
+       order by id desc`
     );
 
     return res.json({
@@ -259,16 +310,18 @@ app.get("/api/projects", async (req, res) => {
       data: rows,
     });
   } catch (err) {
-    console.error("Error fetching projects:", err);
+    console.error("error fetching projects:", err);
     return res.status(500).json({
       status: "error",
-      msg: "Database error while loading projects.",
+      msg: "database error while loading projects.",
     });
   }
 });
 
-// ============ Start server ============
+// ------------------------------------------------------
+// start server
+// ------------------------------------------------------
 
 app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
+  console.log(`server running at http://localhost:${PORT}`);
 });

@@ -7,6 +7,7 @@
   <meta name="description" content="Contact the ClassMate Idea Hub team.">
   <link rel="stylesheet" href="../css/styles.css" />
 </head>
+
 <body>
   <header>
     <nav aria-label="Primary">
@@ -20,6 +21,10 @@
     </nav>
   </header>
 
+  <div class="top-ribbon">
+    <img src="../media/top-ribbon.png" alt="Cute Ribbon Header">
+  </div>
+
   <main class="container">
     <h1>Contact ClassMate Team</h1>
     <p>
@@ -31,44 +36,99 @@
       <fieldset class="form-group">
         <legend>Your Information</legend>
 
+        <!-- first name -->
         <div class="form-row">
           <label for="firstName">First Name</label>
-          <input id="firstName" name="firstName" type="text" required />
+          <input
+            id="firstName"
+            name="firstName"
+            type="text"
+            required
+            minlength="2"
+            maxlength="30"
+            pattern="[A-Za-z]{2,30}"
+            autocomplete="given-name"
+          />
         </div>
 
+        <!-- last name -->
         <div class="form-row">
           <label for="lastName">Last Name</label>
-          <input id="lastName" name="lastName" type="text" required />
+          <input
+            id="lastName"
+            name="lastName"
+            type="text"
+            required
+            minlength="2"
+            maxlength="30"
+            pattern="[A-Za-z]{2,30}"
+            autocomplete="family-name"
+          />
         </div>
 
-        <fieldset class="form-group">
-          <legend>Gender</legend>
-          <label>
-            <input type="radio" name="gender" value="female" /> Female
-          </label>
-          <label>
-            <input type="radio" name="gender" value="male" /> Male
-          </label>
-          <label>
-            <input type="radio" name="gender" value="other" /> Prefer not to say
-          </label>
-        </fieldset>
+        <!-- gender section  -->
+        <div>
+          <div></div>
 
+          <fieldset class="form-group">
+            <legend>Gender</legend>
+
+            <label>
+              <input type="radio" name="gender" value="female" required />
+              Female
+            </label>
+
+            <label>
+              <input type="radio" name="gender" value="male" />
+              Male
+            </label>
+
+            <label>
+              <input type="radio" name="gender" value="other" />
+              Prefer not to say
+            </label>
+          </fieldset>
+        </div>
+
+        <!-- saudi mobile -->
         <div class="form-row">
           <label for="mobile">Mobile (Saudi format)</label>
-          <input id="mobile" name="mobile" type="tel" placeholder="+9665XXXXXXXX" required />
+          <input
+            id="mobile"
+            name="mobile"
+            type="tel"
+            required
+            placeholder="+9665XXXXXXXX"
+            pattern="^(?:\\+9665\\d{8}|05\\d{8})$"
+            inputmode="numeric"
+          />
         </div>
 
+        <!-- dob -->
         <div class="form-row">
           <label for="dob">Date of Birth</label>
-          <input id="dob" name="dob" type="date" required />
+          <input
+            id="dob"
+            name="dob"
+            type="date"
+            required
+            max="2025-12-31"
+          />
         </div>
 
+        <!-- email -->
         <div class="form-row">
           <label for="email">Email</label>
-          <input id="email" name="email" type="email" required />
+          <input
+            id="email"
+            name="email"
+            type="email"
+            required
+            autocomplete="email"
+          />
         </div>
 
+        <!-- language -->
         <div class="form-row">
           <label for="language">Preferred Language</label>
           <select id="language" name="language" required>
@@ -82,11 +142,19 @@
 
       <fieldset class="form-group">
         <legend>Your Message</legend>
+
+        <!-- message -->
         <div class="form-row">
           <label for="message">Message</label>
-          <textarea id="message" name="message" rows="4"
-                    required minlength="10" maxlength="1000"
-                    placeholder="Write your question or feedback here..."></textarea>
+          <textarea
+            id="message"
+            name="message"
+            rows="4"
+            required
+            minlength="10"
+            maxlength="1000"
+            placeholder="Write your question or feedback here..."
+          ></textarea>
         </div>
       </fieldset>
 

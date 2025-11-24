@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>ClassMate • Idea Hub — Home</title>
-  <meta name="description" content="ClassMate Idea Hub is a simple platform for UOJ Computing students to submit and browse team project ideas.">
+  <meta name="description" content="ClassMate Idea Hub is a simple platform for College of Computing students at the University of Jeddah to submit and browse team project ideas.">
   <link rel="stylesheet" href="../css/styles.css" />
 </head>
 
@@ -19,32 +19,46 @@
         <li><a href="contact-us.html">Contact</a></li>
       </ul>
     </nav>
+
   </header>
 
-  <main class="container">
-    <section class="hero">
+  <div class="top-ribbon">
+  <img src="../media/top-ribbon.png" alt="Cute Ribbon Header">
+</div>
+
+  <main>
+
+    <!-- Hero section -->
+    <section class="container hero">
       <h1>ClassMate Idea Hub</h1>
       <p>
-        A practical platform for College of Computing students at the University of Jeddah
-        to organize their <strong>team project ideas</strong> by course and major.
+        A practical space for College of Computer Science and Engi students at the University of Jeddah
+        to register their <strong>team project ideas</strong> by course and major.
       </p>
       <p>
-        One place where teams can submit proposals and instructors can quickly
-        see who is working on what.
+        One place where teams submit proposals, and instructors quickly see
+        who is working on what.
       </p>
 
       <div class="cta-buttons">
         <a class="button" href="idea.html">Submit Your Team Idea</a>
         <a class="button secondary" href="projects.html">Browse All Projects</a>
       </div>
+
+      <!-- الصورة Collap -->
+      <figure style="margin-top: 2rem;">
+        <img src="../media/Collap.png" alt="Students collaborating on a project board" />
+        <figcaption>Project ideas at a glance — without the chaos.</figcaption>
+      </figure>
     </section>
 
-    <section class="info-grid">
+    <!-- Info cards -->
+    <section class="container info-grid">
       <article class="card">
         <h2>For Students</h2>
         <p>
           Register your group, link your project to a specific course,
-          and clearly describe your idea, tools, and major.
+          and clearly describe your idea, goals, and tools.
         </p>
       </article>
 
@@ -64,10 +78,17 @@
         </p>
       </article>
     </section>
+
+    <aside class="container" aria-label="Quick benefits">
+      <h3>Why ClassMate Idea Hub?</h3>
+      <p>Structure, clarity, and shared ownership from kickoff to submission.</p>
+    </aside>
   </main>
 
   <footer class="container">
     <p>© 2025 ClassMate Idea Hub — Team CM3, College of Computing, University of Jeddah</p>
   </footer>
+
+  <script src="../js/app.js" defer></script>
 </body>
 </html>

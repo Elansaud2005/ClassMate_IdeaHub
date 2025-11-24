@@ -7,7 +7,9 @@
   <meta name="description" content="List of team project ideas submitted by students in ClassMate Idea Hub.">
   <link rel="stylesheet" href="../css/styles.css" />
 </head>
-<body>
+
+
+<body class="projects-bg">
   <header>
     <nav aria-label="Primary">
       <ul class="nav">
@@ -20,34 +22,42 @@
     </nav>
   </header>
 
-  <main class="container">
+    <div class="top-ribbon">
+  <img src="../media/top-ribbon.png" alt="Cute Ribbon Header">
+</div>
+<main class="projects-container">
     <h1>Submitted Team Project Ideas</h1>
     <p>These projects are loaded directly from the MySQL database.</p>
 
+    <!-- status box: js يكتب فيه "loading projects..." و الأخطاء -->
     <div id="projectsStatus" class="hint"></div>
 
-    <div class="table-wrapper">
-      <table aria-describedby="projectsStatus">
+    <!-- full-width table wrapper -->
+    <div class="projects-table-wrapper">
+      <table class="projects-table" aria-describedby="projectsStatus">
         <caption>Team Project Ideas</caption>
+
         <thead>
           <tr>
             <th>ID</th>
             <th>Team Name</th>
-            <th>Team Size</th>
-            <th>Course</th>
-            <th>Major</th>
-            <th>Type</th>
-            <th>Project Title</th>
             <th>Representative</th>
+            <th>Team Members</th>
+            <th>Course</th>
+            <th>Category</th>
+            <th>Type</th>
+            <th>Project Name</th>
             <th>Description</th>
           </tr>
         </thead>
+
         <tbody id="projectsBody">
-          <!-- JS will inject rows here -->
+          <!-- js injects rows here -->
         </tbody>
       </table>
     </div>
   </main>
+
 
   <footer class="container">
     <p>© 2025 ClassMate Idea Hub — Team CM3, College of Computing, University of Jeddah</p>
